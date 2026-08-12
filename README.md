@@ -14,24 +14,51 @@
 
 ## Requirements
 
-Tested with Python 3.11, ComfyUI, PyTorch, and torchaudio. The included workflow also requires stock MiniMax H3 Ref2VA nodes, Video Helper Suite, and `ComfyUI-MiniMaxH3-Contex-Loop` 0.3.8 for `MiniMaxH3TimelineAudioGuide`.
+The tested stack uses Python 3.11 and [ComfyUI v0.31.0](https://github.com/comfyanonymous/ComfyUI/tree/43cb4fffc89bba20ab7bd61467a36d0339338dab). The included workflow also requires:
+
+- Stock MiniMax H3 Ref2VA nodes from ComfyUI.
+- [ComfyUI-VideoHelperSuite 1.7.9](https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite/tree/3234937ff5f3ca19068aaba5042771514de2429d).
+- [ComfyUI-MiniMaxH3-Contex-Loop 0.3.8](https://github.com/ethanfel/ComfyUI-MiniMaxH3-Contex-Loop/tree/c8038c19be7f0b7dfdc7a312dce3fbc0bcc978c7) for `MiniMaxH3TimelineAudioGuide`.
+
+The commit pins below reproduce the tested stack. They do not define minimum compatible versions.
 
 This repository does not include ComfyUI, H3 model files, CLIP or VAE files, identity images, source audio, or generated media. Install those assets in your ComfyUI setup and select them in the workflow UI.
 
 ## Installation
 
-Clone the repository into ComfyUI's `custom_nodes` directory.
+The [ComfyUI custom-node guide](https://docs.comfy.org/installation/install_custom_node) covers the general installation process. Use the commands for your Windows installation type below.
 
-```bash
-cd /path/to/ComfyUI/custom_nodes
-git clone https://github.com/shiftedx/ComfyUI-H3-Performance-Prep.git
-```
+### ComfyUI Desktop
+
+In ComfyUI Desktop, select the installation you want to update and open its built-in terminal. Desktop installations live under `%USERPROFILE%\ComfyUI-Installs` by default, and the terminal opens at the selected installation root.
 
 ```powershell
+Set-Location .\custom_nodes
 git clone https://github.com/shiftedx/ComfyUI-H3-Performance-Prep.git
+git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git
+git -C .\ComfyUI-VideoHelperSuite checkout 3234937ff5f3ca19068aaba5042771514de2429d
+git clone https://github.com/ethanfel/ComfyUI-MiniMaxH3-Contex-Loop.git
+git -C .\ComfyUI-MiniMaxH3-Contex-Loop checkout c8038c19be7f0b7dfdc7a312dce3fbc0bcc978c7
+Set-Location ..
+python -m pip install -r .\custom_nodes\ComfyUI-VideoHelperSuite\requirements.txt
 ```
 
-Run either command from ComfyUI's `custom_nodes` directory. Restart ComfyUI after cloning. Install the workflow dependencies from their usual ComfyUI sources before loading the example.
+### ComfyUI Windows Portable
+
+Open PowerShell in the `ComfyUI_windows_portable` directory, then run:
+
+```powershell
+Set-Location .\ComfyUI\custom_nodes
+git clone https://github.com/shiftedx/ComfyUI-H3-Performance-Prep.git
+git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git
+git -C .\ComfyUI-VideoHelperSuite checkout 3234937ff5f3ca19068aaba5042771514de2429d
+git clone https://github.com/ethanfel/ComfyUI-MiniMaxH3-Contex-Loop.git
+git -C .\ComfyUI-MiniMaxH3-Contex-Loop checkout c8038c19be7f0b7dfdc7a312dce3fbc0bcc978c7
+Set-Location ..\..
+.\python_embeded\python.exe -m pip install -r .\ComfyUI\custom_nodes\ComfyUI-VideoHelperSuite\requirements.txt
+```
+
+Restart ComfyUI after installation, then load the example workflow.
 
 ## Quick start
 
@@ -114,6 +141,8 @@ python scripts/validate_workflow.py examples/h3_performance_scene_prep_vocal.jso
 ```
 
 Keep workflow examples portable: use placeholders for local assets, never commit media or model files, and preserve the `audio_window` timing path through `MiniMaxH3TimelineAudioGuide` and `VHS_VideoCombine`.
+
+Open an issue with your ComfyUI version, dependency versions, workflow settings, error output, and steps to reproduce the problem. Pull requests should run the test suite and workflow validator, and they should preserve portable example workflows without local paths or assets.
 
 ## License
 

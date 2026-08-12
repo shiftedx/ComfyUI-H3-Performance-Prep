@@ -1,0 +1,15 @@
+.local-validation/
+.superpowers/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+output/
+temp/
+*.mp4
+*.mov
+*.mkv
+*.wav
+*.flac
+*.mp3

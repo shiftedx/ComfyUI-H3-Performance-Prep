@@ -58,6 +58,21 @@ Set-Location ..\..
 .\python_embeded\python.exe -m pip install -r .\ComfyUI\custom_nodes\ComfyUI-VideoHelperSuite\requirements.txt
 ```
 
+### Linux or manual installation
+
+These commands assume a conventional `~/ComfyUI` checkout. Replace `~/ComfyUI` if your ComfyUI root differs.
+
+```bash
+cd ~/ComfyUI/custom_nodes
+git clone https://github.com/shiftedx/ComfyUI-H3-Performance-Prep.git
+git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git
+git -C ComfyUI-VideoHelperSuite checkout 3234937ff5f3ca19068aaba5042771514de2429d
+git clone https://github.com/ethanfel/ComfyUI-MiniMaxH3-Contex-Loop.git
+git -C ComfyUI-MiniMaxH3-Contex-Loop checkout c8038c19be7f0b7dfdc7a312dce3fbc0bcc978c7
+cd ~/ComfyUI
+python -m pip install -r custom_nodes/ComfyUI-VideoHelperSuite/requirements.txt
+```
+
 Restart ComfyUI after installation, then load the example workflow.
 
 ## Quick start
